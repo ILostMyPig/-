@@ -136,7 +136,13 @@ V1.0.0
 
 ## 下载源代码和EXE文件
 
-[霸屏浏览器（code）](https://github.com/ILostMyPig/BPLLQ)
+**源代码和EXE：**
+
+链接：[https://github.com/ILostMyPig/BPLLQ](https://github.com/ILostMyPig/BPLLQ)
+
+**需要的运行库：**
+
+链接：[https://pan.baidu.com/s/13sihtMkLWUH2kgpq9SlWow?pwd=sc4k](https://pan.baidu.com/s/13sihtMkLWUH2kgpq9SlWow?pwd=sc4k) 
 
 **霸屏浏览器启动程序 ：cs_fxb_win_hook.exe。**
 **设置程序：set_ini.exe。**
