@@ -20,7 +20,7 @@ long GetWinlogonPID(void);
 DIS_CAD_DLL_API bool EnableDebugPrivilege(void)
 {
 	DWORD e;
-	WCHAR ss[11];
+	WCHAR ss[111];
 	LPVOID lpMsgBuf;
 
 	bool re;
@@ -30,6 +30,7 @@ DIS_CAD_DLL_API bool EnableDebugPrivilege(void)
 	//提升进程权限
 	HANDLE gcp;
 
+	SetLastError(ERROR_SUCCESS);
 	gcp=GetCurrentProcess();
 	e = GetLastError();
 	FormatMessage (
@@ -43,6 +44,7 @@ DIS_CAD_DLL_API bool EnableDebugPrivilege(void)
 	if(e != 0)MessageBox(NULL, ss, _T("EDP -> GetCurrentProcess"),MB_OK);
 
 	HANDLE hToken;
+	SetLastError(ERROR_SUCCESS);
 	r = OpenProcessToken(gcp, TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken);
 	e = GetLastError();
 	FormatMessage (
@@ -56,6 +58,7 @@ DIS_CAD_DLL_API bool EnableDebugPrivilege(void)
 	if(e != 0)MessageBox(NULL, ss, _T("EDP -> OpenProcessToken"),MB_OK);
 	if (r &&  !e)
 	{
+		SetLastError(ERROR_SUCCESS);
 		r = LookupPrivilegeValue(NULL, L"SeDebugPrivilege", &TP.Privileges[0].Luid);
 		e = GetLastError();
 		FormatMessage (
@@ -71,6 +74,7 @@ DIS_CAD_DLL_API bool EnableDebugPrivilege(void)
 		{
 			TP.PrivilegeCount = 1;
 			TP.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
+			SetLastError(ERROR_SUCCESS);
 			r = AdjustTokenPrivileges(hToken, false, &TP, sizeof(TP), 0, 0);
 			e = GetLastError();
 			FormatMessage (
@@ -116,6 +120,7 @@ DIS_CAD_DLL_API bool SusWin(void)
 	LPVOID lpMsgBuf;
 
 	HANDLE hP;
+	SetLastError(ERROR_SUCCESS);
 	hP = OpenProcess(PROCESS_ALL_ACCESS, false, GetWinlogonPID());
 	e = GetLastError();
 	FormatMessage (
@@ -137,6 +142,7 @@ DIS_CAD_DLL_API bool SusWin(void)
 		GetProcAddress( GetModuleHandle( L"ntdll" ), "NtSuspendProcess" );
 
 	long re;
+	SetLastError(ERROR_SUCCESS);
 	re=NtSuspendProcess(hP) >= 0;
 	e = GetLastError();
 	FormatMessage (
@@ -168,6 +174,7 @@ long GetWinlogonPID(void)
 	HANDLE hSnapShot;
 
 	PROCESSENTRY32 PEE ;
+	SetLastError(ERROR_SUCCESS);
 	hSnapShot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 	e = GetLastError();
 	FormatMessage (
@@ -182,6 +189,7 @@ long GetWinlogonPID(void)
 
 
 	PEE.dwSize = sizeof(PEE);
+	SetLastError(ERROR_SUCCESS);
 	lngResult = Process32First(hSnapShot, &PEE);
 	e = GetLastError();
 	FormatMessage (
@@ -216,6 +224,7 @@ long GetWinlogonPID(void)
 			WinlogonPID=re;
 			return re;
 		}
+		SetLastError(ERROR_SUCCESS);
 		lngResult = Process32Next(hSnapShot, &PEE);
 		e = GetLastError();
 		FormatMessage (

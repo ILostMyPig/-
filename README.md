@@ -22,6 +22,12 @@
 
 ## 更新日志
 
+V7.6.1
+
+- "运行我，制作绿色版.bat"支持windows7 sp1 64位系统。
+
+- GetLastError的默认值应该是ERROR_SUCCESS，但发现hp prodesk 480 g2 mt(tpm)型号的电脑上，使用windows7 sp1 64位系统时，其默认值是“内存位置访问无效。”，导致报错。
+
 V7.5.10
 
 - 自动关机功能不能启动。
